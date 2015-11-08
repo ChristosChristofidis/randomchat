@@ -13,7 +13,7 @@ module.exports = class RoomManager {
 
   findRoom(callback) {
     this.userIndex++;
-    // If no other user is currently waiting, we wait for a certain period of time, then
+    // If no other user is currently waiting, we wait for a certain period of time, then callback an error
     if (!this.waitingUserCallback) {
       this.waitingUserCallback = callback;
 
@@ -32,6 +32,7 @@ module.exports = class RoomManager {
         const roomId = bytes.toString('hex');
         callback(null, roomId);
         this.waitingUserCallback(null, roomId);
+        this.waitingUserCallback = null;
       });
     }
   };

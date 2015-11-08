@@ -22,7 +22,8 @@ describe('Room Manager', () => {
 
   it('gives users who wait too long an error callback', (done) => {
     const roomManager = new RoomManager();
-    roomManager.maxWaitTime = 60;
+    // Reduce the max wait time so tests won't take as long
+    roomManager.maxWaitTime = 10;
     roomManager.findRoom((err, roomId) => {
       assert.equal(err, 'timeout');
       done();
