@@ -1,6 +1,7 @@
 'use strict';
 
 const async = require('async');
+const crypto = require('crypto');
 
 module.exports = class RoomManager {
   constructor() {
@@ -27,9 +28,11 @@ module.exports = class RoomManager {
       }, this.maxWaitTime);
     } else {
       // gen room id
-      const roomId = '1234';
-      callback(null, roomId);
-      this.waitingUserCallback(null, roomId);
+      crypto.randomBytes(12, (err, bytes) => {
+        const roomId = bytes.toString('hex');
+        callback(null, roomId);
+        this.waitingUserCallback(null, roomId);
+      });
     }
   };
 };
